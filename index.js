@@ -29,7 +29,7 @@ app.use(
 app.get("/image/:id", async (req, res) => {
   if (req.params.id) {
     const find = await Image.findById(req.params.id).exec()
-    if(find){
+    if (find) {
       const img = Buffer.from(find.base64, "base64")
       res.writeHead(200, {
         "Content-Type": find.type,
@@ -37,7 +37,9 @@ app.get("/image/:id", async (req, res) => {
       })
       return res.end(img)
     }
-    return res.status(404)
+    return res.status(404).send({
+      message: "Not found image!",
+    })
   }
 })
 
