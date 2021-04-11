@@ -2,12 +2,14 @@ const express = require("express")
 const app = express()
 const port = process.env.PORT || 3000
 require("dotenv").config()
+const cors = require('cors')
 // connect db
 const mongoose = require("mongoose")
 mongoose.connect(process.env.mongodb_uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
+
 // image Model
 const imageScema = mongoose.Schema(
   {
@@ -18,6 +20,7 @@ const imageScema = mongoose.Schema(
 )
 const Image = mongoose.model("Image", imageScema)
 
+app.use(cors())
 app.use(express.json())
 app.use(
   express.urlencoded({
